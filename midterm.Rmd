@@ -1,0 +1,126 @@
+---
+title: "Midterm"
+author: "Krutika Chauhan"
+date: "2022-10-19"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+###a) importing the dataset, b) determining the median age for by passenger class, and c) a plot that shows medians, spread of data, and outliers for the continuous variable age according to passenger class. Report the medians by passenger class and upload a PDF or picture of your plot.
+```{r}
+##Libraries
+library(haven) 
+
+# for reading csv file 
+#(read_csv())
+library(readr) 
+
+# for data management
+library(dplyr)
+library(plyr)
+library(ggplot2)
+```
+###a
+##importing dataset csv
+```{r, chunk7}
+library(haven)
+df = read_csv("/Users/krutika/Downloads/titanic.csv")
+```
+
+
+```{r}
+#mean
+mean(df$Age, na.rm = TRUE)
+```
+
+```{r}
+group.means<-ddply(df,c("Pclass"),summarise,mean=mean(Age))
+group.means
+```
+###b
+```{r}
+aggregate(df$Age,         # Median by group
+          list(df$Pclass),
+          median)
+```
+
+```{r}
+out <- boxplot.stats(df$Age)$out
+boxplot(df$Age ~ df$Pclass, range = 1,
+  ylab = "Age", xlab = "Pclass"
+)
+mtext(paste("Outliers: ", paste(out, collapse = ", ")))
+```
+
+
+###boxplot
+```{r}
+# Boxplot from dataframe
+boxplot(df$Age ~ df$Pclass, range = 1, outline = TRUE, 
+        horizontal = TRUE, col = c('red', 'blue', 'yellow'),
+        main = 'Age by Pclass', 
+        ylab = 'Pclass', xlab = 'Age',
+        names = c('One', 'Two', 'Three'))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
